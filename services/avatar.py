@@ -148,7 +148,8 @@ async def _get_avatar_url_from_web_coroutine(user_id, future):
 async def _do_get_avatar_url_from_web(user_id):
     try:
         async with utils.request.http_session.get(
-            'https://api.bilibili.com/x/space/acc/info',
+            # 'https://api.bilibili.com/x/space/acc/info',
+            'https://api.bilibili.com/x/space/app/index',
             headers={
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)'
                               ' Chrome/102.0.0.0 Safari/537.36'
@@ -168,7 +169,8 @@ async def _do_get_avatar_url_from_web(user_id):
     except (aiohttp.ClientConnectionError, asyncio.TimeoutError):
         return None
 
-    avatar_url = process_avatar_url(data['data']['face'])
+    # avatar_url = process_avatar_url(data['data']['face'])
+    avatar_url = process_avatar_url(data['data']['info']['face'])
     update_avatar_cache(user_id, avatar_url)
     return avatar_url
 
