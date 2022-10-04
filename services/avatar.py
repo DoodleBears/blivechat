@@ -16,7 +16,6 @@ import utils.request
 
 logger = logging.getLogger(__name__)
 
-
 DEFAULT_AVATAR_URL = '//static.hdslb.com/images/member/noface.gif'
 
 _main_event_loop = asyncio.get_event_loop()
@@ -26,9 +25,13 @@ _avatar_url_cache: Dict[int, str] = {}
 _uid_fetch_future_map: Dict[int, asyncio.Future] = {}
 # 正在获取头像的user_id队列
 _uid_queue_to_fetch: Optional[asyncio.Queue] = None
-# 上次被B站ban时间
-_last_fetch_banned_time: Optional[datetime.datetime] = None
+# 上次被B站ban时间列表，初始化于底部
+_last_fetch_banned_time: Dict[int, Optional[datetime.datetime]] = {}
+# 这次要用来请求头像的api
+current_avatar_api_index = 0
 
+# 用来请求头像的函数列表，定义在底部
+# AVATAR_API_FUNC
 
 def init():
     cfg = config.get_config()
@@ -116,17 +119,6 @@ async def _get_avatar_url_from_web_consumer():
             if future is None:
                 continue
 
-            # 防止在被ban的时候获取
-            global _last_fetch_banned_time
-            if _last_fetch_banned_time is not None:
-                cur_time = datetime.datetime.now()
-                if (cur_time - _last_fetch_banned_time).total_seconds() < 3 * 60 + 3:
-                    # 3分钟以内被ban，解封大约要15分钟
-                    future.set_result(None)
-                    continue
-                else:
-                    _last_fetch_banned_time = None
-
             asyncio.ensure_future(_get_avatar_url_from_web_coroutine(user_id, future))
 
             # 限制频率，防止被B站ban
@@ -146,33 +138,119 @@ async def _get_avatar_url_from_web_coroutine(user_id, future):
 
 
 async def _do_get_avatar_url_from_web(user_id):
-    try:
-        async with utils.request.http_session.get(
-            # 'https://api.bilibili.com/x/space/acc/info',
-            'https://api.bilibili.com/x/space/app/index',
-            headers={
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)'
-                              ' Chrome/102.0.0.0 Safari/537.36'
-            },
-            params={
-                'mid': user_id
-            }
-        ) as r:
-            if r.status != 200:
-                logger.warning('Failed to fetch avatar: status=%d %s uid=%d', r.status, r.reason, user_id)
-                if r.status == 412:
-                    # 被B站ban了
-                    global _last_fetch_banned_time
-                    _last_fetch_banned_time = datetime.datetime.now()
-                return None
-            data = await r.json()
-    except (aiohttp.ClientConnectionError, asyncio.TimeoutError):
-        return None
+    global current_avatar_api_index, _last_fetch_banned_time, AVATAR_API_FUNC
+    avatar_url = None
+    old_index = current_avatar_api_index
+    while avatar_url in [None,'//static.hdslb.com/images/member/noface.gif'] and current_avatar_api_index != ((old_index+len(AVATAR_API_FUNC)-1) % len(AVATAR_API_FUNC)):
+        # 防止在被ban的时候获取
+        if _last_fetch_banned_time[current_avatar_api_index] is not None:
+            cur_time = datetime.datetime.now()
+            if (cur_time - _last_fetch_banned_time[current_avatar_api_index]).total_seconds() < 3 * 60 + 3:
+                # 3分钟以内被ban，解封大约要15分钟
+                continue
+            else:
+                _last_fetch_banned_time[current_avatar_api_index] = None
 
-    # avatar_url = process_avatar_url(data['data']['face'])
-    avatar_url = process_avatar_url(data['data']['info']['face'])
+        avatar_url = await AVATAR_API_FUNC[current_avatar_api_index](user_id)
+        current_avatar_api_index = (current_avatar_api_index+1) % len(AVATAR_API_FUNC)
     update_avatar_cache(user_id, avatar_url)
     return avatar_url
+
+
+async def _do_get_avatar_url_from_web_space(mid):
+    _data = await _do_async_get(
+        f'https://m.bilibili.com/space/{mid}',
+        {},
+        mid,
+        no_json = True,
+    )
+    if _data is None:
+        return None
+    avatar_url = None
+    try:
+        avatar_url = re.findall('//i[0-9].hdslb.com/bfs/face/[0-9a-f]+.[fgijnp]{3}',_data,re.S)[0]
+    except Exception:
+        return None
+    finally:
+        return avatar_url
+
+
+async def _do_get_avatar_url_from_web_interface(mid):
+    _data = await _do_async_get(
+        'http://api.bilibili.com/x/web-interface/card',
+        {'mid': mid},
+        mid,
+        no_json = False,
+    )
+    if _data is None:
+        return None
+    avatar_url = None
+    try:
+        avatar_url = _data['data']['card']['face']
+    except Exception:
+        return None
+    finally:
+        return avatar_url
+
+
+async def _do_get_avatar_url_from_web_app(mid):
+    _data = await _do_async_get(
+        'https://api.bilibili.com/x/space/app/index',
+        {'mid': mid},
+        mid,
+        no_json = False,
+    )
+    if _data is None:
+        return None
+    avatar_url = None
+    try:
+        avatar_url = _data['data']['info']['face']
+    except Exception:
+        return None
+    finally:
+        return avatar_url
+
+
+async def _do_get_avatar_url_from_web_acc(mid):
+    _data = await _do_async_get(
+        'https://api.bilibili.com/x/space/acc/info',
+        {'mid': mid},
+        mid,
+        no_json = False,
+    )
+    if _data is None:
+        return None
+    avatar_url = None
+    try:
+        avatar_url = _data['data']['face']
+    except Exception:
+        return None
+    finally:
+        return avatar_url
+
+
+async def _do_async_get(url: str, params: dict, user_id, no_json):
+    try:
+        async with utils.request.http_session.get(
+            url,
+            headers={
+                'User-Agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Mobile Safari/537.36',
+                'sec-ch-ua-mobile': '?1',
+                'sec-ch-ua-platform': "Android",
+            },
+            params=params
+        ) as r:
+            if r.status != 200:
+                logger.warning(
+                    'Failed to fetch avatar: status=%d %s uid=%d', r.status, r.reason, user_id)
+                if r.status == 412:
+                    # 被B站ban了
+                    global _last_fetch_banned_time, current_avatar_api_index
+                    _last_fetch_banned_time[current_avatar_api_index] = datetime.datetime.now()
+                return None
+            return await r.text() if no_json else await r.json()
+    except (aiohttp.ClientConnectionError, asyncio.TimeoutError):
+        return None
 
 
 def process_avatar_url(avatar_url):
@@ -219,3 +297,13 @@ def _update_avatar_cache_in_database(user_id, avatar_url):
         pass
     except sqlalchemy.exc.SQLAlchemyError:
         logger.exception('_update_avatar_cache_in_database failed:')
+
+# 用来请求头像的函数列表
+AVATAR_API_FUNC = [
+    _do_get_avatar_url_from_web_space,
+    _do_get_avatar_url_from_web_interface,
+    _do_get_avatar_url_from_web_app,
+    _do_get_avatar_url_from_web_acc,
+]
+
+_last_fetch_banned_time = {i:None for i in range(len(AVATAR_API_FUNC))}
