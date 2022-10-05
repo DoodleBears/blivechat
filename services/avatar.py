@@ -157,6 +157,23 @@ async def _do_get_avatar_url_from_web(user_id):
     return avatar_url
 
 
+async def _do_get_avatar_url_from_web_original(uid):
+    _data = await _do_async_get(
+        f'https://chat.bilisc.com/api/avatar_url',
+        {'uid':uid},
+        uid,
+        no_json = True,
+    )
+    if _data is None:
+        return None
+    avatar_url = None
+    try:
+        avatar_url = _data['avatarUrl']
+    except Exception:
+        return None
+    finally:
+        return avatar_url
+
 async def _do_get_avatar_url_from_web_space(mid):
     _data = await _do_async_get(
         f'https://m.bilibili.com/space/{mid}',
@@ -300,6 +317,7 @@ def _update_avatar_cache_in_database(user_id, avatar_url):
 
 # 用来请求头像的函数列表
 AVATAR_API_FUNC = [
+    _do_get_avatar_url_from_web_original,
     _do_get_avatar_url_from_web_space,
     _do_get_avatar_url_from_web_interface,
     _do_get_avatar_url_from_web_app,
