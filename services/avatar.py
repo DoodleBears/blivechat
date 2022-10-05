@@ -162,7 +162,7 @@ async def _do_get_avatar_url_from_web_original(uid):
         f'https://chat.bilisc.com/api/avatar_url',
         {'uid':uid},
         uid,
-        no_json = True,
+        no_json = False,
     )
     if _data is None:
         return None
