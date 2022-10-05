@@ -252,6 +252,7 @@ async def _do_async_get(url: str, params: dict, user_id, no_json):
             url,
             headers={
                 'User-Agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Mobile Safari/537.36',
+                'cookie': '',
                 'sec-ch-ua-mobile': '?1',
                 'sec-ch-ua-platform': "Android",
             },
