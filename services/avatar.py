@@ -148,13 +148,13 @@ async def _get_avatar_url_from_web_coroutine(user_id, future):
 async def _do_get_avatar_url_from_web(user_id):
     try:
         async with utils.request.http_session.get(
-            'https://api.bilibili.com/x/space/acc/info',
+            'https://api.live.bilibili.com/xlive/web-room/v1/index/getDanmuMedalAnchorInfo',
             headers={
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)'
                               ' Chrome/102.0.0.0 Safari/537.36'
             },
             params={
-                'mid': user_id
+                'ruid': user_id
             }
         ) as r:
             if r.status != 200:
@@ -168,7 +168,7 @@ async def _do_get_avatar_url_from_web(user_id):
     except (aiohttp.ClientConnectionError, asyncio.TimeoutError):
         return None
 
-    avatar_url = process_avatar_url(data['data']['face'])
+    avatar_url = process_avatar_url(data['data']['rface'])
     update_avatar_cache(user_id, avatar_url)
     return avatar_url
 
