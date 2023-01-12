@@ -36,7 +36,7 @@
                   :avatarUrl="message.avatarUrl"
                   :authorName="message.authorName"
                   :authorType="message.authorType"
-                  
+
                   :privilegeType="message.privilegeType"
                   :repeated="message.repeated"
                   :repeatedThread="message.repeatedThread"
@@ -45,7 +45,7 @@
                   :medalLevel="message.medalLevel"
                   :isFanGroup="message.isFanGroup"
                   :isDelete="message.isDelete"
-                  
+
                   :richContents="getShowRichContentThread(message)"
                 ></text-message>
                 <paid-message :key="message.id" v-else-if="message.type === MESSAGE_TYPE_GIFT"
@@ -101,7 +101,7 @@
                   :avatarUrl="message.avatarUrl"
                   :authorName="getShowAuthorName(message)"
                   :price="message.price"
-                  :content="getShowContent(message)" 
+                  :content="getShowContent(message)"
                   :isDelete="message.isDelete"
                 ></paid-message>
               </template>
@@ -207,7 +207,7 @@ export default {
       MESSAGE_TYPE_GIFT: constants.MESSAGE_TYPE_GIFT,
       MESSAGE_TYPE_MEMBER: constants.MESSAGE_TYPE_MEMBER,
       MESSAGE_TYPE_SUPER_CHAT: constants.MESSAGE_TYPE_SUPER_CHAT,
-      
+
 
       messages: [],                        // 显示的消息
       paidMessages: [],                    // 固定在上方的消息
@@ -263,7 +263,7 @@ export default {
       if(this.pinTime == 0) {
         return
       }
-      
+
       this.curTime = new Date()
       for (let i = 0; i < this.messages.length;) {
         let message = this.messages[i]
@@ -278,7 +278,7 @@ export default {
     async onMessageLeave(el, done) {
       let time_interval = this.estimatedEnqueueInterval;
       let curTime = new Date()
-      
+
       // console.log(curTime - this.lastEnqueueTime)
       // console.log(time_interval)
       el.classList.add('leaving')
@@ -286,7 +286,7 @@ export default {
         // console.log('消息过快，省略动画')
         done()
         await this.$nextTick()
-        
+
         this.$refs.itemOffset.style.height = `${this.$refs.items.clientHeight}px`
         return
       }
@@ -314,7 +314,7 @@ export default {
     getShowRichContent: constants.getShowRichContent,
     getShowRichContentThread: constants.getShowRichContentThread,
     getShowAuthorName: constants.getShowAuthorName,
-    
+
 
     addMessage(message) {
       this.addMessages([message])
@@ -333,7 +333,7 @@ export default {
         let index = 0
         for (let innerContent of message.contents) {
           // console.log(`判断index:${index}: ${innerContent}`)
-          
+
           let messageContent = innerContent.trim().toLowerCase()
           let longer, shorter
           if (messageContent.length > content.length) {
@@ -347,7 +347,7 @@ export default {
               && longer.length - shorter.length < shorter.length // 长度差较小
           ) {
             // 其实有小概率导致弹幕卡住
-            
+
             message.repeatedThread[index]++
             message.repeated++
 
@@ -384,8 +384,8 @@ export default {
           return false
         }
       })
-      
-      
+
+
       return res
     },
     mergeSimilarGift(authorName, price, giftName, num) {
@@ -622,7 +622,7 @@ export default {
     },
     handleUpdateMessage({ id, newValuesObj }) {
       // 遍历滚动的消息
-      
+
       this.forEachRecentMessage(999999999, message => {
         if (message.id !== id) {
           return true
@@ -661,7 +661,7 @@ export default {
         }
         return
       }
-      
+
       // 当buffer和现存队列中的消息总数超过maxNumber（最大弹幕数的时候），给旧弹幕加上delete属性，让CSS做消失动画
       let deleteNum = Math.max(this.messages.length + this.messagesBuffer.length - this.maxNumber, 0)
       if (deleteNum > 0 && this.fadeOutNum > 0) {
@@ -682,14 +682,14 @@ export default {
       }
 
       this.calculateHeight()
-      
+
       for (let message of this.messagesBuffer) {
         this.messages.push(message)
       }
       this.messagesBuffer = []
       // 等items高度变化
       await this.$nextTick()
-      
+
       this.showNewMessages()
     },
     calculateHeight() {
@@ -700,7 +700,7 @@ export default {
         return
       }
       let hasScrollBar = this.$refs.items.clientHeight > this.$refs.scroller.clientHeight
-      
+
       this.$refs.itemOffset.style.height = `${this.$refs.items.clientHeight}px`
       // console.log(`itemOffset.height = ${this.$refs.itemOffset.style.height}`)
       if (!this.canScrollToBottomOrTimedOut() || !hasScrollBar) {
@@ -709,10 +709,10 @@ export default {
 
       // 计算剩余像素
       this.scrollPixelsRemaining += this.$refs.items.clientHeight - this.preinsertHeight
-      
+
       this.scrollToBottom()
 
-      
+
 
       // 计算是否平滑滚动、剩余时间
       if (!this.lastSmoothChatMessageAddMs) {

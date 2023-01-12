@@ -341,6 +341,13 @@ export default class ChatClientDirect {
       translation: '',
       emoticon: info[0][13].url || null
     }
+    // 存储emoji占位符和图片对应关系
+    if (info[0][15] && info[0][15].extra) {
+      const extraMap = JSON.parse(info[0][15].extra)
+      if (extraMap.emots) {
+        data.emots = extraMap.emots
+      }
+    }
     this.onAddText(data)
   }
 

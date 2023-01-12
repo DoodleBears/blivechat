@@ -40,10 +40,13 @@
             <div id='image-and-message' class="style-scope yt-live-chat-text-message-renderer">
               <template v-for="(content, contentIndex) in richContent">
                 <span :key="contentIndex" v-if="content.type === CONTENT_TYPE_TEXT" id="message" class="style-scope yt-live-chat-text-message-renderer"
-                  display="block"
-                  :style="` 
-                    ${content.textColor === 'initial' ? '' : `color: ${content.textColor} !important;`};`"
-                >{{ content.text }}</span>
+                  :style="`${content.textColor === 'initial' ? '' : `color: ${content.textColor} !important;`};`"
+                >
+                  <span v-for="(content, index) in contentList(content)" :key="index">
+                    <img v-if="content.type === 2" :src="content.content" class="yt-live-chat-text-message-emoji" style="height: 20px;width: 20px;display: inline-block;vertical-align: middle;" alt=""/>
+                    <span v-else>{{ content.content }}</span>
+                  </span>
+                </span>
                 <img :key="contentIndex" v-else-if="content.type === CONTENT_TYPE_IMAGE"
                   class="image yt-formatted-string style-scope yt-live-chat-text-message-renderer"
                   :style="`display: ${content.align};`"
@@ -94,11 +97,13 @@
             <div id='image-and-message' class="style-scope yt-live-chat-text-message-renderer">
               <template v-for="(content, contentIndex) in richContent">
                 <span :key="contentIndex" v-if="content.type === CONTENT_TYPE_TEXT" id="message" class="style-scope yt-live-chat-text-message-renderer"
-                  display="block" 
-                  :style="` 
-                    ${content.textColor === 'initial' ? '' : `color: ${content.textColor} !important;`};
-                    `"
-                >{{ content.text }}</span>
+                  :style="`${content.textColor === 'initial' ? '' : `color: ${content.textColor} !important;`};`"
+                >
+                  <span v-for="(content, index) in contentList(content)" :key="index">
+                    <img v-if="content.type === 2" :src="content.content" class="yt-live-chat-text-message-emoji" style="height: 20px;width: 20px;display: inline-block;vertical-align: middle;" alt=""/>
+                    <span v-else>{{ content.content }}</span>
+                  </span>
+                </span>
                 <img :key="contentIndex" v-else-if="content.type === CONTENT_TYPE_IMAGE"
                   class="image yt-formatted-string style-scope yt-live-chat-text-message-renderer"
                   :style="`display: ${content.align};`"
@@ -181,6 +186,36 @@ export default {
       // return this.repeated
       return this.repeatedThread[index]
     },
+    // 将文字替换为文字和emoji图片列表
+    contentList(content) {
+      if (content.emots) {
+        let temp = content.text
+        // 偷懒了 b站现在发不了⭐字符 目前用⭐当分隔符
+        for (const target in content.emots) {
+          temp = temp.replaceAll(target, '⭐' + target + '⭐')
+        }
+        const list = temp.split('⭐')
+        const result = []
+        list.forEach(item => {
+          if (item !== '') {
+            if (content.emots[item]) {
+              result.push({
+                type: 2,
+                content: content.emots[item].url
+              })
+            } else {
+              result.push({
+                type: 1,
+                content: item
+              })
+            }
+          }
+        })
+        return result
+      } else {
+        return [{ type: 1, content: content.text }]
+      }
+    }
   },
   computed: {
     timeText() {
@@ -198,7 +233,7 @@ export default {
       }
       return `hsl(${color[0]}, ${color[1]}%, ${color[2]}%)`
     },
-    
+
     repeatedMarkColor() {
       let color
       if (this.repeated <= 2) {
