@@ -10,11 +10,12 @@
         </el-tab-pane>
       </el-tabs>
 
-      <el-form label-width="150px" size="mini">
+      <el-form size="mini">
         <h3>{{ $t('stylegen.result') }}</h3>
         <el-card shadow="never">
-          <el-form-item label="CSS">
-            <el-input v-model="inputResult" ref="result" type="textarea" :rows="20"></el-input>
+          <el-form-item>
+            <!-- <el-input v-model="inputResult" ref="result" type="textarea" :rows="20"></el-input> -->
+            <monaco-editor id="monaco-editor" v-model="inputResult" ref="result" :rows="20" />
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="copyResult">{{ $t('stylegen.copy') }}</el-button>
@@ -50,11 +51,12 @@ import _ from 'lodash'
 import Legacy from './Legacy'
 import LineLike from './LineLike'
 import Room from '@/views/Room'
+import MonacoEditor from './MonacoEditor.vue'
 
 export default {
   name: 'StyleGenerator',
   components: {
-    Legacy, LineLike, Room
+    Legacy, LineLike, Room, MonacoEditor
   },
   data() {
     let styleElement = document.createElement('style')
@@ -127,8 +129,7 @@ export default {
       }
     },
     copyResult() {
-      this.$refs.result.select()
-      document.execCommand('Copy')
+      navigator.clipboard.writeText(this.inputResult)
     },
     resetConfig() {
       this.$refs[this.activeTab].resetConfig()
@@ -179,7 +180,9 @@ export default {
     -webkit-gradient(linear, 0 100%, 100% 0, color-stop(.75, transparent), color-stop(.75, #eee)),
     -webkit-gradient(linear, 0 0, 100% 100%, color-stop(.75, transparent), color-stop(.75, #eee));
 }
-
+#monaco-editor {
+  height: 400px;
+}
 #fakebody {
   outline: 1px #999 dashed;
   height: 100%;

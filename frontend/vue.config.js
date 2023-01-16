@@ -1,3 +1,4 @@
+const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin')
 const API_BASE_URL = 'http://localhost:12450'
 
 module.exports = {
@@ -22,5 +23,14 @@ module.exports = {
         env.APP_VERSION = JSON.stringify(APP_VERSION)
         return args
       })
-  }
+    config.module
+      .rule('monaco-editor-babel-loader')
+      .test(/monaco-editor[\\/].*\.js$/)
+      .use('babel-loader')
+      .loader('babel-loader')
+      .end()
+    config
+      .plugin('monaco-editor')
+      .use(MonacoWebpackPlugin, [{ languages: ['css'] }])
+  },
 }
