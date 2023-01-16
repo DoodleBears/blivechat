@@ -56,7 +56,7 @@ export default {
       return constants.getPriceConfig(this.price)
     },
     priceText() {
-      let price_str = this.price > 0 ? ('CN¥' + utils.formatCurrency(this.price)) : '银瓜子礼物'
+      let price_str = this.price > 0 ? `CN¥${utils.formatCurrency(this.price)}` : '银瓜子礼物'
       return price_str
     },
     timeText() {

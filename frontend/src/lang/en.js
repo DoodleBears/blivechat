@@ -69,8 +69,8 @@ export default {
         name: 'Replace the text without sign'
       },
       {
-          id: '1',
-          name: 'Add after message'
+        id: '1',
+        name: 'Add after message'
       }
     ],
     maxImage: 'Max number of　pictures',
@@ -193,7 +193,7 @@ export default {
     showMedalName: 'Show badge name',
     showMedalLevel: 'Show badge level',
 
-    emoticonSize: 'Emoticon size', 
+    emoticonSize: 'Emoticon size',
     emoticonInlineBorderRadius: 'Inline emoticon border radius',
     emoticonBlockBorderRadius: 'Block picture border radius',
     

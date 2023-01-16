@@ -1,6 +1,6 @@
 import * as i18n from '@/i18n'
 
-export const UID_COLOR_MAP_REGEX = /^#([A-Fa-f0-9]{8}|[A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
+export const UID_COLOR_MAP_REGEX = /^#([A-Fa-f0-9]{8}|[A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/
 
 export const IMAGE_SHOW_TYPE_REPLACE = 0
 export const IMAGE_SHOW_TYPE_ADD_AFTER = 1
@@ -49,81 +49,81 @@ export const MEDAL_CONFIGS = [
   {
     level: 37,
     colors: {
-      bgColor:`linear-gradient(to right, #ff6e1a, #fdb870)`,
+      bgColor: `linear-gradient(to right, #ff6e1a, #fdb870)`,
       borderColor: `#ff6e1a`,
-      textColor:`#fdb870`
+      textColor: `#fdb870`
     }
   },
   {
     level: 33,
     colors: {
-      bgColor:`linear-gradient(to right, #881537, #c15b85)`,
+      bgColor: `linear-gradient(to right, #881537, #c15b85)`,
       borderColor: `#881537`,
-      textColor:`#c15b85`
+      textColor: `#c15b85`
     }
   },
   {
     level: 29,
     colors: {
-      bgColor:`linear-gradient(to right, #361b69, #7668c3)`,
+      bgColor: `linear-gradient(to right, #361b69, #7668c3)`,
       borderColor: `#361b69`,
-      textColor:`#7668c3`
+      textColor: `#7668c3`
     }
   },
   {
     level: 25,
     colors: {
-      bgColor:`linear-gradient(to right, #10205b, #6382e9)`,
+      bgColor: `linear-gradient(to right, #10205b, #6382e9)`,
       borderColor: `#10205b`,
-      textColor:`#111111`
+      textColor: `#111111`
     }
   },
   {
     level: 21,
     colors: {
-      bgColor:`linear-gradient(to right, #1e5950, #4e988d)`,
+      bgColor: `linear-gradient(to right, #1e5950, #4e988d)`,
       borderColor: `#1e5950`,
-      textColor:`#111111`
+      textColor: `#111111`
     }
   },
   {
     level: 17,
     colors: {
-      bgColor:`#c79d24`,
+      bgColor: `#c79d24`,
       borderColor: `#c79d24`,
-      textColor:`#c79d24`
+      textColor: `#c79d24`
     }
   },
   {
     level: 13,
     colors: {
-      bgColor:`#be6686`,
+      bgColor: `#be6686`,
       borderColor: `#be6686`,
-      textColor:`#be6686`
+      textColor: `#be6686`
     }
   },
   {
     level: 9,
     colors: {
-      bgColor:`#8d7ca6`,
+      bgColor: `#8d7ca6`,
       borderColor: `#8d7ca6`,
-      textColor:`#8d7ca6`
+      textColor: `#8d7ca6`
     }
   },
   {
     level: 5,
     colors: {
-      bgColor:`#5d7b9e`,
+      bgColor: `#5d7b9e`,
       borderColor: `#5d7b9e`,
-      textColor:`#5d7b9e`
+      textColor: `#5d7b9e`
     }
   },
   {
     level: 1,
     colors: {
-      bgColor:`#5c968e`,
+      bgColor: `#5c968e`,
       borderColor: `#5c968e`,
-      textColor:`#5c968e`
+      textColor: `#5c968e`
     }
   }
   
@@ -229,7 +229,7 @@ export const PRICE_CONFIGS = [
   }
 ]
 
-export function getMedalConfig (level) {
+export function getMedalConfig(level) {
   for (const config of MEDAL_CONFIGS) {
     if (level >= config.level) {
       return config
@@ -299,7 +299,7 @@ export function getShowRichContentThread(message) {
   return richContents
 }
 
-export function getGiftShowContent (message, showGiftInfo) {
+export function getGiftShowContent(message, showGiftInfo) {
   if (!showGiftInfo) {
     return ''
   }

@@ -101,7 +101,7 @@
                   :avatarUrl="message.avatarUrl"
                   :authorName="getShowAuthorName(message)"
                   :price="message.price"
-                  :content="getShowContent(message)" 
+                  :content="getShowContent(message)"
                   :isDelete="message.isDelete"
                 ></paid-message>
               </template>
@@ -236,7 +236,7 @@ export default {
   },
   computed: {
     getFloatTime() {
-      return this.floatTime;
+      return this.floatTime
     },
     canScrollToBottom() {
       return this.atBottom/* || this.allowScroll */
@@ -260,14 +260,14 @@ export default {
   },
   methods: {
     updateProgress() {
-      if(this.pinTime == 0) {
+      if (this.pinTime == 0) {
         return
       }
       
       this.curTime = new Date()
       for (let i = 0; i < this.messages.length;) {
         let message = this.messages[i]
-        if ((this.curTime - message.addTime) / (1000) >= this.pinTime) {
+        if ((this.curTime - message.addTime) / 1000 >= this.pinTime) {
           // console.log('删除消息')
           this.messages.splice(i, 1)
         } else {
@@ -276,13 +276,13 @@ export default {
       }
     },
     async onMessageLeave(el, done) {
-      let time_interval = this.estimatedEnqueueInterval;
+      let time_interval = this.estimatedEnqueueInterval
       let curTime = new Date()
       
       // console.log(curTime - this.lastEnqueueTime)
       // console.log(time_interval)
       el.classList.add('leaving')
-      if(time_interval < 1650 && curTime - this.lastEnqueueTime < 2000) {
+      if (time_interval < 1650 && curTime - this.lastEnqueueTime < 2000) {
         // console.log('消息过快，省略动画')
         done()
         await this.$nextTick()
@@ -293,7 +293,7 @@ export default {
       this.onLeave = true
 
       // 等 100ms 后执行
-      window.setTimeout(() =>  {
+      window.setTimeout(() => {
         el.classList.add('collapsing')
         done()
         this.$refs.itemOffset.classList.add('collapsing')
@@ -369,7 +369,7 @@ export default {
           return true
         } else {
           // 如果新消息的时间间隔上一条消息超过 mergeSameUserDanmakuInterval 秒，则不合并
-          if(new Date(time * 1000) - message.time > this.mergeSameUserDanmakuInterval * 1000) {
+          if (new Date(time * 1000) - message.time > this.mergeSameUserDanmakuInterval * 1000) {
             return true
           }
           // FIXME: 翻译bug
@@ -595,7 +595,7 @@ export default {
         addTime: new Date() // 添加一个本地时间给Ticker用，防止本地时间和服务器时间相差很大的情况
       }
       //* 判断是否要加入到弹幕队列，如果是打赏但价格低于最低打赏价格则不加入
-      if (message.price == undefined || message.price >= this.minGiftPrice ) {
+      if (message.price == undefined || message.price >= this.minGiftPrice) {
         this.messagesBuffer.push(message)
       }
 
@@ -649,7 +649,7 @@ export default {
       if (this.messagesBuffer.length <= 0) {
         return
       }
-      if(this.onLeave) {
+      if (this.onLeave) {
         // console.log('删除动画进行中')
         return
       }
@@ -665,9 +665,9 @@ export default {
       // 当buffer和现存队列中的消息总数超过maxNumber（最大弹幕数的时候），给旧弹幕加上delete属性，让CSS做消失动画
       let deleteNum = Math.max(this.messages.length + this.messagesBuffer.length - this.maxNumber, 0)
       if (deleteNum > 0 && this.fadeOutNum > 0) {
-        for(let i = 0; i < this.messages.length; i++) {
-          if(i < deleteNum) {
-            this.messages[i].isDelete = true;
+        for (let i = 0; i < this.messages.length; i++) {
+          if (i < deleteNum) {
+            this.messages[i].isDelete = true
           }
         }
         await this.$nextTick()
@@ -696,7 +696,7 @@ export default {
       this.preinsertHeight = this.$refs.items.clientHeight
     },
     showNewMessages() {
-      if(this.randomXOffset || this.randomYOffset) {
+      if (this.randomXOffset || this.randomYOffset) {
         return
       }
       let hasScrollBar = this.$refs.items.clientHeight > this.$refs.scroller.clientHeight
@@ -711,7 +711,6 @@ export default {
       this.scrollPixelsRemaining += this.$refs.items.clientHeight - this.preinsertHeight
       
       this.scrollToBottom()
-
       
 
       // 计算是否平滑滚动、剩余时间

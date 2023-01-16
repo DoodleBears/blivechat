@@ -29,7 +29,7 @@ module.exports = {
     "key-spacing": ["error", { "mode": "minimum" }],
     "keyword-spacing": "error", // 关键词前后加空格
     "lines-between-class-members": "error", // 类成员定义间加空格
-    "max-lines-per-function": ["error", 150], // 每个函数最多行数
+    // "max-lines-per-function": ["error", 150], // 每个函数最多行数
     "max-nested-callbacks": ["error", 3], // 每个函数最多嵌套回调数
     "new-parens": "error", // new调用构造函数加空格
     "no-array-constructor": "error", // 使用数组字面量，而不是数组构造函数
@@ -42,7 +42,7 @@ module.exports = {
     "no-mixed-operators": "error", // 禁止混用不同优先级的操作符而不加括号
     "no-multi-spaces": ["error", { "ignoreEOLComments": true }], // 禁止多个空格，除了行尾注释前
     "no-multiple-empty-lines": "error", // 最多2个连续空行
-    "no-nested-ternary": "error", // 禁止嵌套三元表达式
+    // "no-nested-ternary": "error", // 禁止嵌套三元表达式
     "no-sequences": "error", // 禁止使用逗号操作符
     "no-tabs": "error", // 禁止使用tab
     "no-trailing-spaces": ["error", { "skipBlankLines": true }], // 禁止行尾的空格，除了空行

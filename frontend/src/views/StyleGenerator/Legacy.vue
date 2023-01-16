@@ -688,17 +688,17 @@ img.yt-live-chat-author-badge-renderer, yt-icon.yt-live-chat-author-badge-render
   height: ${this.form.badgesSize}px;
 }`
     },
-      medalStyle() {
+    medalStyle() {
       return `/* Medal */
 yt-live-chat-author-medal-renderer {
-    ${this.form.showMedal ? (this.form.showOnlyOwnerMedal ? `display: none;`: `display: flex;`) : 'display: none;'}
+    ${this.form.showMedal ? this.form.showOnlyOwnerMedal ? `display: none;` : `display: flex;` : 'display: none;'}
     
 }
 yt-live-chat-author-medal-renderer[is-fan-group] {
   ${this.form.showMedal ? `display: flex;` : ''}
 }
 #medal-name.yt-live-chat-author-medal-renderer {
-  ${this.form.showMedalName ? '' :  `visibility: hidden;
+  ${this.form.showMedalName ? '' : `visibility: hidden;
   width: 0;
   height: 0;
   padding: 0;`}
@@ -712,7 +712,7 @@ yt-live-chat-author-medal-renderer[is-fan-group] {
   height: 0;
   padding: 0;`}
   font-size: ${this.form.medalFontSize}px !important;
-  line-height: ${this.form.medalLineHeight || this.form.medalFontSize }px !important;
+  line-height: ${this.form.medalLineHeight || this.form.medalFontSize}px !important;
 }
 `
     },
@@ -760,7 +760,7 @@ yt-live-chat-text-message-renderer #thread>#card:first-child #content{
 #thread>#card:first-child img.yt-img-shadow {
     visibility: visible;
     height: auto;
-}`:``}
+}` : ``}
 
 
 yt-live-chat-text-message-renderer #message {

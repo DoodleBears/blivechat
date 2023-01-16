@@ -600,7 +600,7 @@ img.yt-live-chat-author-badge-renderer, yt-icon.yt-live-chat-author-badge-render
     medalStyle() {
       return `/* Medal */
 yt-live-chat-author-medal-renderer {
-    ${this.form.showMedal ? (this.form.showOnlyOwnerMedal ? `display: none;` : `display: flex;`) : 'display: none;'}
+    ${this.form.showMedal ? this.form.showOnlyOwnerMedal ? `display: none;` : `display: flex;` : 'display: none;'}
     
 }
 yt-live-chat-author-medal-renderer[is-fan-group] {

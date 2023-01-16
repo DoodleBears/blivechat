@@ -7,9 +7,9 @@ const NAMES = [
   'ジョナサン・ジョースター', 'ジョセフ・ジョースター', 'ディオ・ブランドー', '空條承太郎', '博丽灵梦', '雾雨魔理沙', 'Rick Astley',
   '只熊KUMA', 'DoodleBear', '椅子_Official', '星界璃海', '玲玲', '海式policturn', '小川尚未', '梅林Kitsune', '因扎因·内比娅',
   '只熊KUMA', 'DoodleBear', '椅子_Official', '星界璃海', '玲玲', '海式policturn', '小川尚未', '梅林Kitsune', '因扎因·内比娅',
-  '只熊KUMA','只熊KUMA','只熊KUMA','只熊KUMA','只熊KUMA','只熊KUMA','只熊KUMA','只熊KUMA','只熊KUMA','只熊KUMA','只熊KUMA',
-  '只熊KUMA','只熊KUMA','只熊KUMA','只熊KUMA','只熊KUMA','只熊KUMA','只熊KUMA','只熊KUMA','只熊KUMA','只熊KUMA','只熊KUMA',
-  '只熊KUMA','只熊KUMA','只熊KUMA','只熊KUMA','只熊KUMA','只熊KUMA','只熊KUMA','只熊KUMA','只熊KUMA','只熊KUMA','只熊KUMA'
+  '只熊KUMA', '只熊KUMA', '只熊KUMA', '只熊KUMA', '只熊KUMA', '只熊KUMA', '只熊KUMA', '只熊KUMA', '只熊KUMA', '只熊KUMA', '只熊KUMA',
+  '只熊KUMA', '只熊KUMA', '只熊KUMA', '只熊KUMA', '只熊KUMA', '只熊KUMA', '只熊KUMA', '只熊KUMA', '只熊KUMA', '只熊KUMA', '只熊KUMA',
+  '只熊KUMA', '只熊KUMA', '只熊KUMA', '只熊KUMA', '只熊KUMA', '只熊KUMA', '只熊KUMA', '只熊KUMA', '只熊KUMA', '只熊KUMA', '只熊KUMA'
 
 ]
 

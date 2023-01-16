@@ -1,5 +1,5 @@
 <template>
-  <yt-live-chat-author-medal-renderer v-if="medalName != undefined" :medal-name="medalName" :medal-nevel="medalLevel" :is-fan-group="isFanGroup" 
+  <yt-live-chat-author-medal-renderer v-if="medalName != undefined" :medal-name="medalName" :medal-nevel="medalLevel" :is-fan-group="isFanGroup"
   :style="{
       '--yt-live-chat-medal-background-color': medalColor.bgColor,
       '--yt-live-chat-medal-border-color': medalColor.borderColor,

@@ -34,7 +34,7 @@ export default {
   computed: {
     authorTypeText() {
       // 优先判断舰长
-      if(this.privilegeType > 0) {
+      if (this.privilegeType > 0) {
         return 'member'
       }
 

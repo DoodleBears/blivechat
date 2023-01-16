@@ -1,5 +1,5 @@
 <template>
-  <yt-live-chat-membership-item-renderer show-only-header  class="style-scope yt-live-chat-item-list-renderer" 
+  <yt-live-chat-membership-item-renderer show-only-header  class="style-scope yt-live-chat-item-list-renderer"
     :privilegeType="privilegeType"
     :is-deleted="isDelete"
   >

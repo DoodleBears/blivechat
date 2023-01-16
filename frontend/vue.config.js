@@ -19,7 +19,7 @@ module.exports = {
       .tap(args => {
         let defineMap = args[0]
         let env = defineMap['process.env']
-        env['APP_VERSION'] = JSON.stringify(APP_VERSION)
+        env.APP_VERSION = JSON.stringify(APP_VERSION)
         return args
       })
   }

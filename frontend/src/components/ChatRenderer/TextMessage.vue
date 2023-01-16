@@ -13,7 +13,7 @@
     >
     <div v-if="mergeSameUserDanmaku === true" id="thread">
       <template v-for="(richContent, richContentIndex) in richContents">
-        <div id="card" class="style-scope yt-live-chat-text-message-renderer" :style="{'--text-color': textColor}">
+        <div :key="richContentIndex" id="card" class="style-scope yt-live-chat-text-message-renderer" :style="{'--text-color': textColor}">
           <img-shadow id="author-photo" height="24" width="24" class="style-scope yt-live-chat-text-message-renderer"
             :imgUrl="avatarUrl"
           ></img-shadow>
@@ -41,7 +41,7 @@
               <template v-for="(content, contentIndex) in richContent">
                 <span :key="contentIndex" v-if="content.type === CONTENT_TYPE_TEXT" id="message" class="style-scope yt-live-chat-text-message-renderer"
                   display="block"
-                  :style="` 
+                  :style="`
                     ${content.textColor === 'initial' ? '' : `color: ${content.textColor} !important;`};`"
                 >{{ content.text }}</span>
                 <img :key="contentIndex" v-else-if="content.type === CONTENT_TYPE_IMAGE"
@@ -67,7 +67,7 @@
     </div>
     <template v-else>
       <template v-for="(richContent, richContentIndex) in richContents">
-        <div id="card" class="style-scope yt-live-chat-text-message-renderer" :style="{'--text-color': textColor}">
+        <div :key="richContentIndex" id="card" class="style-scope yt-live-chat-text-message-renderer" :style="{'--text-color': textColor}">
           <img-shadow id="author-photo" height="24" width="24" class="style-scope yt-live-chat-text-message-renderer"
             :imgUrl="avatarUrl"
           ></img-shadow>
@@ -94,8 +94,8 @@
             <div id='image-and-message' class="style-scope yt-live-chat-text-message-renderer">
               <template v-for="(content, contentIndex) in richContent">
                 <span :key="contentIndex" v-if="content.type === CONTENT_TYPE_TEXT" id="message" class="style-scope yt-live-chat-text-message-renderer"
-                  display="block" 
-                  :style="` 
+                  display="block"
+                  :style="`
                     ${content.textColor === 'initial' ? '' : `color: ${content.textColor} !important;`};
                     `"
                 >{{ content.text }}</span>
