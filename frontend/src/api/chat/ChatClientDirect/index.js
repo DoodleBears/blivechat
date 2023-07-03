@@ -47,6 +47,7 @@ export default class ChatClientDirect {
     // 调用initRoom后初始化，如果失败，使用这里的默认值
     this.roomId = roomId
     this.roomOwnerUid = 0
+    this.token = null
     this.hostServerList = [
       { host: "broadcastlv.chat.bilibili.com", port: 2243, wss_port: 443, ws_port: 2244 }
     ]
@@ -94,6 +95,21 @@ export default class ChatClientDirect {
     }
   }
 
+  async getDanmuInfo() {
+    let res
+    try {
+      res = (await axios.get('/api/danmu_info', { params: {
+        roomId: this.roomId
+      } })).data
+    } catch {
+      return
+    }
+    this.token = res.token || null
+    if (res.hostServerList && res.hostServerList.length !== 0) {
+      this.hostServerList = res.hostServerList
+    }
+  }
+
   makePacket(data, operation) {
     let body = textEncoder.encode(JSON.stringify(data))
     let header = new ArrayBuffer(HEADER_SIZE)
@@ -110,6 +126,7 @@ export default class ChatClientDirect {
     let authParams = {
       uid: 0,
       roomid: this.roomId,
+      key: this.token,
       protover: 3,
       platform: 'danmuji',
       type: 2
@@ -117,10 +134,11 @@ export default class ChatClientDirect {
     this.websocket.send(this.makePacket(authParams, OP_AUTH))
   }
 
-  wsConnect() {
+  async wsConnect() {
     if (this.isDestroying) {
       return
     }
+    await this.getDanmuInfo()
     let hostServer = this.hostServerList[this.retryCount % this.hostServerList.length]
     const url = `wss://${hostServer.host}:${hostServer.wss_port}/sub`
     this.websocket = new WebSocket(url)
