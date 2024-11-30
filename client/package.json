@@ -19,18 +19,6 @@
     "vue-router": "^3.6.5"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.16",
-    "@babel/eslint-parser": "^7.12.16",
-    "@vue/cli-plugin-babel": "~5.0.0",
-    "@vue/cli-plugin-eslint": "~5.0.0",
-    "@vue/cli-service": "~5.0.0",
-    "babel-plugin-component": "^1.1.1",
-    "eslint": "^7.32.0",
-    "eslint-plugin-vue": "^9.16.1"
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not dead"
-  ]
+    "@vue/cli-service": "~5.0.0"
+  }
 }
