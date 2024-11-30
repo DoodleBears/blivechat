@@ -1,0 +1,54 @@
+canvas.yt-live-chat-author-medal-renderer, caption.yt-live-chat-author-medal-renderer, center.yt-live-chat-author-medal-renderer, cite.yt-live-chat-author-medal-renderer, code.yt-live-chat-author-medal-renderer, dd.yt-live-chat-author-medal-renderer, del.yt-live-chat-author-medal-renderer, dfn.yt-live-chat-author-medal-renderer, div.yt-live-chat-author-medal-renderer, dl.yt-live-chat-author-medal-renderer, dt.yt-live-chat-author-medal-renderer, em.yt-live-chat-author-medal-renderer, embed.yt-live-chat-author-medal-renderer, fieldset.yt-live-chat-author-medal-renderer, font.yt-live-chat-author-medal-renderer, form.yt-live-chat-author-medal-renderer, h1.yt-live-chat-author-medal-renderer, h2.yt-live-chat-author-medal-renderer, h3.yt-live-chat-author-medal-renderer, h4.yt-live-chat-author-medal-renderer, h5.yt-live-chat-author-medal-renderer, h6.yt-live-chat-author-medal-renderer, hr.yt-live-chat-author-medal-renderer, i.yt-live-chat-author-medal-renderer, iframe.yt-live-chat-author-medal-renderer, img.yt-live-chat-author-medal-renderer, ins.yt-live-chat-author-medal-renderer, kbd.yt-live-chat-author-medal-renderer, label.yt-live-chat-author-medal-renderer, legend.yt-live-chat-author-medal-renderer, li.yt-live-chat-author-medal-renderer, menu.yt-live-chat-author-medal-renderer, object.yt-live-chat-author-medal-renderer, ol.yt-live-chat-author-medal-renderer, p.yt-live-chat-author-medal-renderer, pre.yt-live-chat-author-medal-renderer, q.yt-live-chat-author-medal-renderer, s.yt-live-chat-author-medal-renderer, samp.yt-live-chat-author-medal-renderer, small.yt-live-chat-author-medal-renderer, span.yt-live-chat-author-medal-renderer, strike.yt-live-chat-author-medal-renderer, strong.yt-live-chat-author-medal-renderer, sub.yt-live-chat-author-medal-renderer, sup.yt-live-chat-author-medal-renderer, table.yt-live-chat-author-medal-renderer, tbody.yt-live-chat-author-medal-renderer, td.yt-live-chat-author-medal-renderer, tfoot.yt-live-chat-author-medal-renderer, th.yt-live-chat-author-medal-renderer, thead.yt-live-chat-author-medal-renderer, tr.yt-live-chat-author-medal-renderer, tt.yt-live-chat-author-medal-renderer, u.yt-live-chat-author-medal-renderer, ul.yt-live-chat-author-medal-renderer, var.yt-live-chat-author-medal-renderer {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.yt-live-chat-author-medal-renderer[hidden] {
+  display: none !important;
+}
+
+yt-live-chat-author-medal-renderer {
+  margin: 0 0 0 4px;
+  text-shadow: none;
+  display: inline-block;
+}
+
+.yt-live-chat-author-medal-renderer {
+  font-size: 14px;
+  line-height: 14px;
+}
+
+#medal-card.yt-live-chat-author-medal-renderer {
+  position: relative;
+  width: max-content; 
+  background: var(--yt-live-chat-medal-background-color, #222222);
+  border: var(--yt-live-chat-medal-border-color, #222222) solid 2px;
+  border-radius: 4px;
+  display: flex;
+  -ms-flex-direction: row;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+#medal-name.yt-live-chat-author-medal-renderer {
+  text-shadow: none;
+  padding: 2px 4px;
+  color: #ffffff;
+}
+
+#medal-level.yt-live-chat-author-medal-renderer {
+  padding: 2px 4px;
+  font-weight: 700;
+  text-shadow: none;
+  text-align: center;
+  background-color: #ffffff;
+  color: var(--yt-live-chat-medal-text-color, #222222);
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
+}
